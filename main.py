@@ -65,6 +65,8 @@ conn = session.connect_cloud(PROJECT_ID)
 i = 0
 
 while True:
+    while len(players) == 0:
+        time.sleep(0.1)
     send_to_project = ""
     currentdata = list(players.values())
     for possible_PID in possible_PIDs:
