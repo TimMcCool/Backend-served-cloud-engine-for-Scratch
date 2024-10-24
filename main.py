@@ -9,9 +9,9 @@ PROJECT_ID = "projectid" # fill in your project id here
 MAX_PLAYERS = 31
 LEAVE_TIMEOUT = 3
 
-session = sa.Session("sessionid", username="username") # fill in your username and your session id here
-events = sa.CloudEvents(PROJECT_ID)
-events2 = sa.WsCloudEvents(PROJECT_ID, session.connect_cloud(PROJECT_ID))
+session = sa.login_by_id("sessionid", username="username") # fill in your username and your session id here
+events = sa.get_cloud(PROJECT_ID).events()
+events2 = session.connect_cloud(PROJECT_ID).events()
 
 players = {}
 possible_PIDs = [i for i in range(1, MAX_PLAYERS+1)]
