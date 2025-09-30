@@ -10,13 +10,13 @@ MAX_PLAYERS = 31
 LEAVE_TIMEOUT = 3
 
 session = sa.login_by_id("sessionid", username="username") # fill in your username and your session id here
-events = sa.get_cloud(PROJECT_ID).events()
-events2 = session.connect_cloud(PROJECT_ID).events()
+events = session.connect_cloud(PROJECT_ID).events()
 
 players = {}
 possible_PIDs = [i for i in range(1, MAX_PLAYERS+1)]
 given_PIDs = []
 
+@events.event
 def on_set(event):
     if event.name != "TO_HOST":
         return
@@ -52,11 +52,7 @@ def send_names_task():
 
                 time.sleep(0.1)
 
-events.event(on_set)
-events2.event(on_set)
-
-#events.start(thread=True, update_interval=0.02)
-events2.start(thread=True)
+events.start(thread=True)
 
 threading.Thread(target=send_names_task).start()
 
